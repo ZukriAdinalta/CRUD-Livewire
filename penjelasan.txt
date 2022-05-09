@@ -1,0 +1,81 @@
+Laravel dan Livewire
+=> https://laravel-livewire.com/docs/2.x/quickstart#install-livewire
+
+1. composer require livewire/livewire
+=> install livewire
+
+2. membuat komponen livewire
+=> php artisan make:livewire ShowPosts
+
+3. membuat komponen livewire langsung dengan folder
+=>  php artisan make:livewire Post\\Show
+    php artisan make:livewire Post/Show
+    php artisan make:livewire post.show
+
+4. Inline Components => membuat livewire tanpa view
+=> app/Http/Livewire/ShowPosts.php
+
+# Quickstart
+=> https://laravel-livewire.com/docs/2.x/quickstart
+
+1. @livewireStyles
+=> kita harus menyisipkan kode @livewireStyles di dalam tag head. 
+
+2. @livewireScripts 
+=> pada di antara tag body, atau di baris terakhir sebelum tag penutup body.
+
+3. <livewire:counter /> 
+=> menampilkan isi dari view/livewire/counter
+
+# Livewire Route
+=> https://laravel-livewire.com/docs/2.x/rendering-components#route-params
+use App\Http\Livewire\Dosen;
+use App\Http\Livewire\Mahasiswa;
+use App\Http\Livewire\Staf;
+
+Route::get('/dosen', Dosen::class);
+Route::get('/mahasiswa', Mahasiswa::class);
+Route::get('/staf', Staf::class);
+
+# Livewire Layouts
+=> https://laravel-livewire.com/docs/2.x/rendering-components#custom-layout
+1. tambahkan view layouts app.blade.php 
+=>  @yield('content')
+
+2. pada Components livewire
+=> return view('livewire.dosen')->extends('layouts.app')->section('content');
+-> supaya @yield('content') terhubung dengan livewire di view
+
+# Livewire Validation
+=> https://laravel-livewire.com/docs/2.x/input-validation
+
+1. menapilkan validation
+public function SimpanData()
+    {
+        $this->validate($this->rules, $this->messages, $this->attributes);
+        
+    }
+
+2. menapilkan kesalahan ketika sedang input filed
+public function SimpanData()
+    {
+        $this->validate($this->rules, $this->messages, $this->attributes);
+        
+    }
+
+#CRUD
+1. tambah data sama seperti validation diatas dan tambah data di laravel biasa
+2. menghilangkan modal jika data telah berhasil disimpan
+- membuat script pada view user
+ <script>
+     window.livewire.on('tambah',()=>{
+         $('#tambah').modal('hide');
+     });
+</script> 
+- tambahkan wire:ignore.self di modal
+- tambah emit di components user
+=> $this->emit('tambah'); 
+
+3. membuat upload foto harus memanggil WithFileUploads; 
+use Livewire\WithFileUploads;
+use WithFileUploads;
